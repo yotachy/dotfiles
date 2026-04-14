@@ -1,0 +1,76 @@
+# ~/.bashrc
+
+[ -z "$PS1" ] && return
+
+HISTSIZE=5000
+HISTFILESIZE=10000
+HISTCONTROL=ignoreboth:erasedups
+shopt -s histappend
+
+export EDITOR=vim
+export VISUAL=vim
+export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
+
+if [ -f "$HOME/dotfiles/bash/aliases" ]; then
+    . "$HOME/dotfiles/bash/aliases"
+fi
+
+PS1='\u@\h:\w\$ '
+
+HOST_FILE="$HOME/dotfiles/hosts/$(hostname).sh"
+if [ -f "$HOST_FILE" ]; then
+    . "$HOST_FILE"
+fi
+
+export MONEY_SCOOP_HOME="/home/jschoi0223/projects/moneyscoop"
+alias cdm='cd "$MONEY_SCOOP_HOME"'
+
+gpush() {
+    local branch
+    branch=$(git branch --show-current 2>/dev/null)
+    if [ -z "$branch" ]; then
+        echo "현재 Git 브랜치를 찾을 수 없습니다."
+        return 1
+    fi
+    git push origin "$branch"
+}
+
+gpull() {
+    local branch
+    branch=$(git branch --show-current 2>/dev/null)
+    if [ -z "$branch" ]; then
+        echo "현재 Git 브랜치를 찾을 수 없습니다."
+        return 1
+    fi
+    git pull origin "$branch"
+}
+
+gsync() {
+    local branch
+    branch=$(git branch --show-current 2>/dev/null)
+    if [ -z "$branch" ]; then
+        echo "현재 Git 브랜치를 찾을 수 없습니다."
+        return 1
+    fi
+
+    git status -sb || return 1
+    git pull origin "$branch" || return 1
+    git push origin "$branch"
+}
+
+mspull() {
+    cd "$MONEY_SCOOP_HOME" || return 1
+    git pull
+}
+
+mspush() {
+    cd "$MONEY_SCOOP_HOME" || return 1
+    git push
+}
+
+mssync() {
+    cd "$MONEY_SCOOP_HOME" || return 1
+    git status -sb
+    git pull
+    git push
+}

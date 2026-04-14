@@ -1,0 +1,27 @@
+[user]
+    name = yotachy
+    email = yotachy@gmail.com
+
+[core]
+    editor = vim
+    autocrlf = input
+
+[init]
+    defaultBranch = main
+
+[pull]
+    rebase = false
+
+[push]
+    default = current
+
+[alias]
+    st = status -sb
+    co = checkout
+    br = branch
+    cm = commit -m
+    last = log -1 HEAD --stat
+    lg = log --oneline --graph --decorate --all
+
+[includeIf "gitdir:/home/jschoi0223/projects/moneyscoop/"]
+    path = /home/jschoi0223/dotfiles/git/gitconfig
