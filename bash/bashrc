@@ -11,6 +11,9 @@ export EDITOR=vim
 export VISUAL=vim
 export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 
+export PROJECTS_HOME="/home/jschoi0223/projects"
+export MONEY_SCOOP_HOME="/home/jschoi0223/projects/moneyscoop"
+
 if [ -f "$HOME/dotfiles/bash/aliases" ]; then
     . "$HOME/dotfiles/bash/aliases"
 fi
@@ -22,8 +25,40 @@ if [ -f "$HOST_FILE" ]; then
     . "$HOST_FILE"
 fi
 
-export MONEY_SCOOP_HOME="/home/jschoi0223/projects/moneyscoop"
-alias cdm='cd "$MONEY_SCOOP_HOME"'
+mss() {
+    cd "$MONEY_SCOOP_HOME" || return 1
+    git status -sb
+}
+
+mspull() {
+    cd "$MONEY_SCOOP_HOME" || return 1
+    git pull
+}
+
+mspush() {
+    cd "$MONEY_SCOOP_HOME" || return 1
+    git push
+}
+
+mssync() {
+    cd "$MONEY_SCOOP_HOME" || return 1
+    git status -sb || return 1
+    git pull || return 1
+    git push
+}
+
+mkcd() {
+    mkdir -p "$1" && cd "$1"
+}
+
+croot() {
+    local root
+    root=$(git rev-parse --show-toplevel 2>/dev/null) || {
+        echo "현재 Git 저장소 안이 아닙니다."
+        return 1
+    }
+    cd "$root" || return 1
+}
 
 gpush() {
     local branch
@@ -56,21 +91,4 @@ gsync() {
     git status -sb || return 1
     git pull origin "$branch" || return 1
     git push origin "$branch"
-}
-
-mspull() {
-    cd "$MONEY_SCOOP_HOME" || return 1
-    git pull
-}
-
-mspush() {
-    cd "$MONEY_SCOOP_HOME" || return 1
-    git push
-}
-
-mssync() {
-    cd "$MONEY_SCOOP_HOME" || return 1
-    git status -sb
-    git pull
-    git push
 }
