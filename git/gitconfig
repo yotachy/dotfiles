@@ -23,5 +23,3 @@
     last = log -1 HEAD --stat
     lg = log --oneline --graph --decorate --all
 
-[includeIf "gitdir:/home/jschoi0223/projects/moneyscoop/"]
-    path = /home/jschoi0223/dotfiles/git/gitconfig
