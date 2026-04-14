@@ -109,3 +109,20 @@ dotload() {
     cd "$HOME/dotfiles" || return 1
     git pull && source "$HOME/.bashrc"
 }
+
+mssave() {
+    cd "$MONEY_SCOOP_HOME" || return 1
+    git add .
+
+    if git diff --cached --quiet; then
+        echo "반영할 변경사항이 없습니다."
+        return 0
+    fi
+
+    git commit -m "${1:-Update moneyscoop}" && git push
+}
+
+msload() {
+    cd "$MONEY_SCOOP_HOME" || return 1
+    git pull
+}
