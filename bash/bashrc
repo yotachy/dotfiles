@@ -117,3 +117,20 @@ mscode() {
     cd "$MONEY_SCOOP_HOME" || return 1
     claude
 }
+
+memo() {
+    mkdir -p "$HOME/notes"
+    printf '%s %s\n' "- $(date '+%F %T')" "$*" >> "$HOME/notes/inbox.md"
+    tail -n 3 "$HOME/notes/inbox.md"
+}
+
+msmemo() {
+    printf '%s %s\n' "- $(date '+%F %T')" "$*" >> "$MONEY_SCOOP_HOME/NOTES.md"
+    tail -n 3 "$MONEY_SCOOP_HOME/NOTES.md"
+}
+
+claudememo() {
+    mkdir -p "$MONEY_SCOOP_HOME/.claude"
+    printf '%s %s\n' "- $(date '+%F %T')" "$*" >> "$MONEY_SCOOP_HOME/.claude/CLAUDE.md"
+    tail -n 5 "$MONEY_SCOOP_HOME/.claude/CLAUDE.md"
+}
