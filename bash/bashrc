@@ -30,22 +30,8 @@ mss() {
     git status -sb
 }
 
-mspull() {
-    cd "$MONEY_SCOOP_HOME" || return 1
-    git pull
-}
 
-mspush() {
-    cd "$MONEY_SCOOP_HOME" || return 1
-    git push
-}
 
-mssync() {
-    cd "$MONEY_SCOOP_HOME" || return 1
-    git status -sb || return 1
-    git pull || return 1
-    git push
-}
 
 mkcd() {
     mkdir -p "$1" && cd "$1"
