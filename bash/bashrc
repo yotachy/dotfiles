@@ -112,3 +112,8 @@ msload() {
     cd "$MONEY_SCOOP_HOME" || return 1
     git pull
 }
+
+mscode() {
+    cd "$MONEY_SCOOP_HOME" || return 1
+    claude
+}
